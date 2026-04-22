@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XYZ — Select Your Rewards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --cream: #ede8dc;
+    --accent: #98ef60;
+    --muted: #3a3a3a;
+    --border: #222;
+    --basket-h: 120px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--black);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 80px 40px 60px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: end;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 0.9;
+    color: var(--white);
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #888;
+    max-width: 380px;
+    margin-bottom: 16px;
+  }
+  .step-pills {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .pill {
+    background: var(--muted);
+    border-radius: 2px;
+    padding: 4px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    color: #aaa;
+    text-transform: uppercase;
+  }
+  .pill.active { background: var(--accent); color: var(--black); }
+
+  /* ─── PRODUCTS GRID ─── */
+  .section-label {
+    padding: 24px 40px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: #555;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--basket-h);
+  }
+
+  .product-card {
+    background: var(--black);
+    padding: 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .product-card:hover { background: #111; }
+  .product-card.selected { background: #0f1a00; }
+  .product-card.selected::after {
+    content: '✓';
+    position: absolute; top: 12px; right: 12px;
+    background: var(--accent);
+    color: var(--black);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .product-img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    background: #181818;
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: #333;
+    overflow: hidden;
+    position: relative;
+  }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; }
+  .product-img .emoji-placeholder {
+    font-size: 4rem;
+    filter: grayscale(0.3);
+  }
+
+  .product-name {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+  .product-category {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: #555;
+    text-transform: uppercase;
+  }
+
+  .size-selector {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .size-btn {
+    border: 1px solid var(--muted);
+    background: transparent;
+    color: #888;
+    padding: 4px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    cursor: pointer;
+    border-radius: 1px;
+    transition: all 0.15s;
+    letter-spacing: 1px;
+  }
+  .size-btn:hover { border-color: var(--white); color: var(--white); }
+  .size-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(200,255,0,0.07); }
+
+  .add-btn {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--muted);
+    color: #888;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 1px;
+  }
+  .add-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .add-btn.in-basket { background: var(--accent); color: var(--black); border-color: var(--accent); font-weight: 600; }
+
+  /* ─── BASKET BAR ─── */
+  .basket-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #0f0f0f;
+    border-top: 1px solid var(--border);
+    height: var(--basket-h);
+    display: flex; align-items: center;
+    padding: 0 24px;
+    gap: 16px;
+    z-index: 200;
+    transition: transform 0.3s ease;
+  }
+  .basket-bar.empty { transform: translateY(100%); }
+
+  .basket-scroll {
+    flex: 1;
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted) transparent;
+    padding: 8px 0;
+  }
+
+  .basket-item {
+    flex-shrink: 0;
+    background: var(--muted);
+    border-radius: 2px;
+    padding: 8px 12px;
+    display: flex; align-items: center; gap: 10px;
+    min-width: 160px;
+    max-width: 200px;
+    position: relative;
+  }
+  .basket-item-emoji { font-size: 1.4rem; }
+  .basket-item-info { flex: 1; overflow: hidden; }
+  .basket-item-name {
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .basket-item-size {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: #aaa;
+    letter-spacing: 1px;
+  }
+  .basket-remove {
+    background: none; border: none;
+    color: #666; cursor: pointer; font-size: 1rem; line-height: 1;
+    padding: 0 2px;
+    transition: color 0.15s;
+  }
+  .basket-remove:hover { color: #ff4444; }
+
+  .basket-count {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--accent);
+    white-space: nowrap;
+    min-width: 60px;
+  }
+
+  .redeem-btn {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    padding: 14px 28px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: opacity 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+  .redeem-btn:hover { opacity: 0.85; }
+  .redeem-btn:active { transform: scale(0.98); }
+
+  /* ─── MODAL OVERLAY ─── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 500;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+    padding: 20px;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: #111;
+    border: 1px solid var(--border);
+    max-width: 560px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 2px;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-header {
+    padding: 32px 32px 0;
+    display: flex; align-items: flex-start; justify-content: space-between;
+  }
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .modal-close {
+    background: none; border: none; color: #666;
+    font-size: 1.5rem; cursor: pointer; line-height: 1;
+    padding: 4px;
+  }
+  .modal-close:hover { color: var(--white); }
+
+  .modal-body { padding: 24px 32px 32px; }
+
+  .modal-basket-summary {
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  .modal-basket-summary h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: #555;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .summary-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #1a1a1a;
+    font-size: 0.85rem;
+  }
+  .summary-item:last-child { border-bottom: none; }
+  .summary-size {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    background: rgba(200,255,0,0.1);
+    padding: 2px 8px;
+    border-radius: 1px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .form-group {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: #555;
+    text-transform: uppercase;
+  }
+  input, select, textarea {
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    border-radius: 1px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+  input::placeholder, textarea::placeholder { color: #444; }
+  select option { background: #111; }
+  textarea { resize: vertical; min-height: 70px; }
+
+  .form-submit {
+    width: 100%;
+    margin-top: 20px;
+    padding: 16px;
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: opacity 0.2s;
+  }
+  .form-submit:hover { opacity: 0.85; }
+
+  /* ─── SUCCESS STATE ─── */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 48px 32px;
+  }
+  .success-screen.show { display: block; }
+  .success-icon {
+    font-size: 4rem;
+    margin-bottom: 24px;
+  }
+  .success-screen h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .success-screen p {
+    color: #888;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .ref-code {
+    display: inline-block;
+    background: #0a0a0a;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 2px;
+    margin: 16px 0;
+    letter-spacing: 3px;
+  }
+
+  /* ─── ADMIN VIEW ─── */
+  #admin-panel {
+    display: none;
+    position: fixed; inset: 0;
+    background: var(--black);
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 40px;
+  }
+  #admin-panel.show { display: block; }
+  .admin-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+  .admin-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+  }
+  .admin-close-btn {
+    background: var(--muted); border: none; color: var(--white);
+    padding: 8px 16px; cursor: pointer; font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 1px; border-radius: 2px;
+  }
+  .submission-card {
+    background: #111;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .submission-card h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .submission-detail {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 6px 16px;
+    font-size: 0.82rem;
+    margin-bottom: 12px;
+  }
+  .submission-detail dt {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: #555;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    align-self: center;
+  }
+  .submission-detail dd { color: var(--white); }
+  .items-list { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .item-tag {
+    background: rgba(200,255,0,0.1);
+    border: 1px solid rgba(200,255,0,0.3);
+    color: var(--accent);
+    padding: 3px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    border-radius: 1px;
+    letter-spacing: 1px;
+  }
+  .no-submissions {
+    text-align: center;
+    padding: 80px;
+    color: #444;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+  }
+  .export-btn {
+    background: var(--muted); border: none; color: var(--white);
+    padding: 10px 20px; cursor: pointer; font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 1px; border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .export-btn:hover { background: #555; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    header { padding: 0 20px; }
+    .hero { grid-template-columns: 1fr; padding: 48px 20px 40px; gap: 24px; }
+    .hero h1 { font-size: clamp(3.5rem, 15vw, 6rem); }
+    .section-label { padding: 16px 20px 12px; }
+    .products { grid-template-columns: repeat(2, 1fr); }
+    .product-card { padding: 16px; }
+    .basket-bar { padding: 0 16px; gap: 10px; }
+    .modal { max-width: 100%; }
+    .modal-header, .modal-body { padding-left: 20px; padding-right: 20px; }
+    .form-grid { grid-template-columns: 1fr; }
+    #admin-panel { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="logo">
+  <!-- Zig_Base_Logo mark (scaled small) -->
+  <svg width="32" height="28" viewBox="0 0 657 574.11" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+    <polygon fill="#ff9642" points="447 515.94 546 574.1 546 457.77 447 399.6 447 515.94"/>
+    <polygon fill="#98ef60" points="657 399.6 559 457.77 559 574.11 657 515.94 657 399.6"/>
+    <polygon fill="#05dde2" points="434 399.6 335 457.77 335 574.1 434 515.94 434 399.6"/>
+    <polygon fill="#ffc373" points="434 0 335 58.16 335 174.51 434 116.34 434 0"/>
+    <polygon fill="#ff3740" points="434 257.97 335 199.8 335 316.14 434 374.31 434 257.97"/>
+    <polygon fill="#d647c2" points="551 199.8 447 257.97 447 374.31 551 316.14 551 199.8"/>
+    <polygon fill="#2d56c7" points="210 515.94 111 574.1 111 457.77 210 399.6 210 515.94"/>
+    <polygon fill="#7c47bf" points="0 399.6 98 457.77 98 574.11 0 515.94 0 399.6"/>
+    <polygon fill="#0389e8" points="223 399.6 322 457.77 322 574.1 223 515.94 223 399.6"/>
+    <polygon fill="#fff32e" points="223 0 322 58.16 322 174.51 223 116.34 223 0"/>
+    <polygon fill="#ff6d55" points="223 257.97 322 199.8 322 316.14 223 374.31 223 257.97"/>
+    <polygon fill="#06dd7e" points="106 199.8 210 257.97 210 374.31 106 316.14 106 199.8"/>
+  </svg>
+  <!-- Zig_Brandmark wordmark -->
+  <svg width="110" height="20" viewBox="0 0 646.82 69.72" xmlns="http://www.w3.org/2000/svg" style="margin-left:10px;flex-shrink:0;">
+    <path fill="#f5f0e8" d="m1.66,12.46V.78h45.18v5.84l-29.21,50.63h30.57v11.68H0v-5.84L29.5,12.46H1.66Z"/>
+    <path fill="#f5f0e8" d="m133.85,68.94l-1.07-7.3c-3.6,5.36-9.05,8.08-16.55,8.08-8.76,0-16.16-3.02-22.3-9.15-6.13-6.13-9.15-14.7-9.15-25.7s3.12-19.57,9.44-25.7c6.33-6.13,13.92-9.15,22.98-9.15,14.7,0,24.73,8.57,28.33,21.52l-11.59,3.02c-3.51-8.57-9.06-12.85-16.75-12.85-11.59,0-19.57,7.98-19.57,23.17s7.89,23.17,19.28,23.17c9.25,0,14.41-5.94,15.29-12.95h-12.66v-10.52h24.93v34.37h-10.61Z"/>
+    <path fill="#f5f0e8" d="m203.76,68.94l-1.07-7.3c-3.6,5.36-9.05,8.08-16.55,8.08-8.76,0-16.16-3.02-22.3-9.15-6.13-6.13-9.15-14.7-9.15-25.7s3.12-19.57,9.44-25.7c6.33-6.13,13.92-9.15,22.98-9.15,14.7,0,24.73,8.57,28.33,21.52l-11.59,3.02c-3.51-8.57-9.06-12.85-16.75-12.85-11.59,0-19.57,7.98-19.57,23.17s7.89,23.17,19.28,23.17c9.25,0,14.41-5.94,15.29-12.95h-12.66v-10.52h24.93v34.37h-10.61Z"/>
+    <path fill="#f5f0e8" d="m277.76.78v42.26c0,17.62-9.83,26.68-25.41,26.68s-25.41-9.06-25.41-26.68V.78h12.66v42.45c0,9.83,4.28,14.8,12.76,14.8s12.76-4.97,12.76-14.8V.78h12.66Z"/>
+    <path fill="#f5f0e8" d="m322.55,38.46l18.89,30.48h-14.12l-18.3-29.4h-6.62v29.4h-12.66V.78h24.83c13.24,0,20.74,7.69,20.74,19.38,0,9.05-4.58,15.87-12.75,18.3Zm-7.89-10.61c5.36,0,7.98-2.53,7.98-7.69s-2.63-7.69-7.98-7.69h-12.27v15.38h12.27Z"/>
+    <path fill="#f5f0e8" d="m393.31,68.94l-4.97-16.07h-21.62l-4.97,16.07h-13.63L371.21.78h12.66l23.08,68.16h-13.63Zm-15.77-51.41l-7.21,23.66h14.41l-7.2-23.66Z"/>
+    <path fill="#f5f0e8" d="m401.1,12.46V.78h50.43v11.68h-18.89v56.47h-12.66V12.46h-18.89Z"/>
+    <path fill="#f5f0e8" d="m516.38.78h13.83l-18.01,31.35,21.23,36.8h-14.02l-14.12-24.63-14.12,24.63h-14.02l21.23-36.8L480.36.78h13.83l11.1,19.28,11.1-19.28Z"/>
+    <path fill="#f5f0e8" d="m538.81.78h13.63l12.37,26.48,12.36-26.48h13.63l-19.67,39.14v29.02h-12.66v-29.02L538.81.78Z"/>
+    <path fill="#f5f0e8" d="m600.28,12.46V.78h45.18v5.84l-29.21,50.63h30.57v11.68h-48.2v-5.84l29.5-50.63h-27.85Z"/>
+    <rect fill="#f5f0e8" x="60.76" y=".78" width="12.66" height="68.16"/>
+  </svg>
+</div>
+  <div class="header-tag">Reward Redemption Portal</div>
+  <!-- Secret admin: click logo 5x -->
+</header>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div>
+    <h1>CHOOSE<br>YOUR <span>REWARD</span></h1>
+
+  </div>
+  <div>
+    <p>Select the products you want below. Pick your size, add to your list, then hit Redeem to claim your items.</p>
+    <div class="step-pills">
+      <span class="pill active">01 Browse</span>
+      <span class="pill">02 Select Size</span>
+      <span class="pill">03 Add to List</span>
+      <span class="pill">04 Redeem</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRODUCTS ─── -->
+<div class="section-label">— Available Products (15 items)</div>
+<div class="products" id="products-grid"></div>
+
+<!-- ─── BASKET BAR ─── -->
+<div class="basket-bar empty" id="basket-bar">
+  <div class="basket-count" id="basket-count">0 items</div>
+  <div class="basket-scroll" id="basket-scroll"></div>
+  <button class="redeem-btn" id="redeem-btn" onclick="openModal()">REDEEM →</button>
+</div>
+
+<!-- ─── REDEEM MODAL ─── -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div id="modal-form-view">
+      <div class="modal-header">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:2px;color:#555;margin-bottom:8px;text-transform:uppercase;">Step 04 — Claim</div>
+          <div class="modal-title">SHIPPING<br>DETAILS</div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <!-- Order summary -->
+        <div class="modal-basket-summary">
+          <h3>Your Selection</h3>
+          <div id="modal-summary-items"></div>
+        </div>
+
+        <!-- Shipping form -->
+        <div class="form-grid" id="shipping-form">
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" id="f-firstname" placeholder="Alex" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" id="f-lastname" placeholder="Johnson" required>
+          </div>
+          <div class="form-group full">
+            <label>Email *</label>
+            <input type="email" id="f-email" placeholder="alex@example.com" required>
+          </div>
+          <div class="form-group full">
+            <label>Address Line 1 *</label>
+            <input type="text" id="f-addr1" placeholder="123 Main Street" required>
+          </div>
+          <div class="form-group full">
+            <label>Address Line 2</label>
+            <input type="text" id="f-addr2" placeholder="Apt, Suite, Floor...">
+          </div>
+          <div class="form-group">
+            <label>City *</label>
+            <input type="text" id="f-city" placeholder="London" required>
+          </div>
+          <div class="form-group">
+            <label>Postcode *</label>
+            <input type="text" id="f-postcode" placeholder="EC1A 1BB" required>
+          </div>
+          <div class="form-group full">
+            <label>Country *</label>
+            <select id="f-country">
+              <option value="GB">United Kingdom</option>
+              <option value="US">United States</option>
+              <option value="AU">Australia</option>
+              <option value="CA">Canada</option>
+              <option value="IE">Ireland</option>
+              <option value="NZ">New Zealand</option>
+              <option value="DE">Germany</option>
+              <option value="FR">France</option>
+              <option value="NL">Netherlands</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Notes (optional)</label>
+            <textarea id="f-notes" placeholder="Any special instructions or notes..."></textarea>
+          </div>
+        </div>
+
+        <button class="form-submit" onclick="submitRedemption()">CONFIRM REDEMPTION →</button>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon">
+  <svg width="80" height="70" viewBox="0 0 657 574.11" xmlns="http://www.w3.org/2000/svg">
+    <polygon fill="#ff9642" points="447 515.94 546 574.1 546 457.77 447 399.6 447 515.94"/>
+    <polygon fill="#98ef60" points="657 399.6 559 457.77 559 574.11 657 515.94 657 399.6"/>
+    <polygon fill="#05dde2" points="434 399.6 335 457.77 335 574.1 434 515.94 434 399.6"/>
+    <polygon fill="#ffc373" points="434 0 335 58.16 335 174.51 434 116.34 434 0"/>
+    <polygon fill="#ff3740" points="434 257.97 335 199.8 335 316.14 434 374.31 434 257.97"/>
+    <polygon fill="#d647c2" points="551 199.8 447 257.97 447 374.31 551 316.14 551 199.8"/>
+    <polygon fill="#2d56c7" points="210 515.94 111 574.1 111 457.77 210 399.6 210 515.94"/>
+    <polygon fill="#7c47bf" points="0 399.6 98 457.77 98 574.11 0 515.94 0 399.6"/>
+    <polygon fill="#0389e8" points="223 399.6 322 457.77 322 574.1 223 515.94 223 399.6"/>
+    <polygon fill="#fff32e" points="223 0 322 58.16 322 174.51 223 116.34 223 0"/>
+    <polygon fill="#ff6d55" points="223 257.97 322 199.8 322 316.14 223 374.31 223 257.97"/>
+    <polygon fill="#06dd7e" points="106 199.8 210 257.97 210 374.31 106 316.14 106 199.8"/>
+  </svg>
+</div>
+      <h2>REDEEMED!</h2>
+      <p>Your reward claim has been received.</p>
+      <p>We'll be in touch at your email to confirm dispatch.</p>
+      <div class="ref-code" id="ref-code-display"></div>
+      <p style="font-size:0.75rem;color:#555;margin-top:8px;">Save this reference number</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── ADMIN PANEL ─── -->
+<div id="admin-panel">
+  <div class="admin-header">
+    <h2>⚙ SUBMISSIONS ADMIN</h2>
+    <div style="display:flex;gap:10px;">
+      <button class="export-btn" onclick="exportCSV()">Export CSV</button>
+      <button class="export-btn" onclick="exportJSON()">Export JSON</button>
+      <button class="admin-close-btn" onclick="closeAdmin()">✕ Close</button>
+    </div>
+  </div>
+  <div id="admin-content"></div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// PRODUCT DATA (replace images with real URLs)
+// ─────────────────────────────────────────────
+const PRODUCTS = [
+  { id: 1, name: 'Essential Hoodie', category: 'Apparel', emoji: '🧥', sizes: ['XS','S','M','L','XL','XXL'], img: null },
+  { id: 2, name: 'Premium Tee', category: 'Apparel', emoji: '👕', sizes: ['XS','S','M','L','XL','XXL'], img: null },
+  { id: 3, name: 'Cargo Joggers', category: 'Bottoms', emoji: '👖', sizes: ['XS','S','M','L','XL'], img: null },
+  { id: 4, name: 'Logo Cap', category: 'Accessories', emoji: '🧢', sizes: ['One Size'], img: null },
+  { id: 5, name: 'Crewneck Sweater', category: 'Apparel', emoji: '🧶', sizes: ['XS','S','M','L','XL','XXL'], img: null },
+  { id: 6, name: 'Crossbody Bag', category: 'Accessories', emoji: '👜', sizes: ['One Size'], img: null },
+  { id: 7, name: 'Track Jacket', category: 'Outerwear', emoji: '🫡', sizes: ['S','M','L','XL'], img: null },
+  { id: 8, name: 'Beanie', category: 'Accessories', emoji: '🧣', sizes: ['One Size'], img: null },
+  { id: 9, name: 'Oversized Tee', category: 'Apparel', emoji: '🏷️', sizes: ['S','M','L','XL','XXL'], img: null },
+  { id: 10, name: 'Zip Hoodie', category: 'Apparel', emoji: '🤐', sizes: ['XS','S','M','L','XL','XXL'], img: null },
+  { id: 11, name: 'Windbreaker', category: 'Outerwear', emoji: '🌬️', sizes: ['S','M','L','XL'], img: null },
+  { id: 12, name: 'Water Bottle', category: 'Lifestyle', emoji: '🫙', sizes: ['500ml','1L'], img: null },
+  { id: 13, name: 'Tote Bag', category: 'Accessories', emoji: '🛍️', sizes: ['One Size'], img: null },
+  { id: 14, name: 'Shorts', category: 'Bottoms', emoji: '🩳', sizes: ['XS','S','M','L','XL'], img: null },
+  { id: 15, name: 'Snapback', category: 'Accessories', emoji: '🎩', sizes: ['One Size'], img: null },
+];
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let basket = []; // { productId, name, emoji, size }
+let selectedSizes = {}; // productId -> size
+
+// ─────────────────────────────────────────────
+// RENDER PRODUCTS
+// ─────────────────────────────────────────────
+function renderProducts() {
+  const grid = document.getElementById('products-grid');
+  grid.innerHTML = PRODUCTS.map(p => `
+    <div class="product-card" id="card-${p.id}">
+      <div class="product-img">
+        ${p.img ? `<img src="${p.img}" alt="${p.name}">` : `<div class="emoji-placeholder">${p.emoji}</div>`}
+      </div>
+      <div>
+        <div class="product-category">${p.category}</div>
+        <div class="product-name">${p.name}</div>
+      </div>
+      <div class="size-selector" id="sizes-${p.id}">
+        ${p.sizes.map(s => `
+          <button class="size-btn" onclick="selectSize(${p.id}, '${s}', this)">${s}</button>
+        `).join('')}
+      </div>
+      <button class="add-btn" id="add-${p.id}" onclick="toggleBasket(${p.id})">+ Add to List</button>
+    </div>
+  `).join('');
+}
+
+// ─────────────────────────────────────────────
+// SIZE SELECTION
+// ─────────────────────────────────────────────
+function selectSize(productId, size, btn) {
+  selectedSizes[productId] = size;
+  // Update UI
+  const container = document.getElementById(`sizes-${productId}`);
+  container.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // If already in basket, update size
+  const inBasket = basket.find(b => b.productId === productId);
+  if (inBasket) {
+    inBasket.size = size;
+    renderBasket();
+  }
+}
+
+// ─────────────────────────────────────────────
+// BASKET TOGGLE
+// ─────────────────────────────────────────────
+function toggleBasket(productId) {
+  const inBasket = basket.findIndex(b => b.productId === productId);
+
+  if (inBasket > -1) {
+    // Remove
+    basket.splice(inBasket, 1);
+    document.getElementById(`card-${productId}`).classList.remove('selected');
+    document.getElementById(`add-${productId}`).classList.remove('in-basket');
+    document.getElementById(`add-${productId}`).textContent = '+ Add to List';
+  } else {
+    // Add - require size if multiple sizes
+    const product = PRODUCTS.find(p => p.id === productId);
+    const size = selectedSizes[productId] || (product.sizes.length === 1 ? product.sizes[0] : null);
+
+    if (!size && product.sizes.length > 1) {
+      // Flash the size row
+      const sizeRow = document.getElementById(`sizes-${productId}`);
+      sizeRow.style.outline = '1px solid #ff4444';
+      setTimeout(() => sizeRow.style.outline = '', 1200);
+      return;
+    }
+
+    if (!selectedSizes[productId] && product.sizes.length === 1) {
+      selectedSizes[productId] = product.sizes[0];
+      document.querySelector(`#sizes-${productId} .size-btn`).classList.add('active');
+    }
+
+    basket.push({ productId, name: product.name, emoji: product.emoji, size: selectedSizes[productId] });
+    document.getElementById(`card-${productId}`).classList.add('selected');
+    document.getElementById(`add-${productId}`).classList.add('in-basket');
+    document.getElementById(`add-${productId}`).textContent = '✓ In List';
+  }
+
+  renderBasket();
+}
+
+// ─────────────────────────────────────────────
+// RENDER BASKET BAR
+// ─────────────────────────────────────────────
+function renderBasket() {
+  const bar = document.getElementById('basket-bar');
+  const scroll = document.getElementById('basket-scroll');
+  const count = document.getElementById('basket-count');
+
+  if (basket.length === 0) {
+    bar.classList.add('empty');
+    return;
+  }
+  bar.classList.remove('empty');
+  count.textContent = `${basket.length} item${basket.length !== 1 ? 's' : ''}`;
+
+  scroll.innerHTML = basket.map(item => `
+    <div class="basket-item">
+      <div class="basket-item-emoji">${item.emoji}</div>
+      <div class="basket-item-info">
+        <div class="basket-item-name">${item.name}</div>
+        <div class="basket-item-size">${item.size}</div>
+      </div>
+      <button class="basket-remove" onclick="removeFromBasket(${item.productId})" title="Remove">✕</button>
+    </div>
+  `).join('');
+}
+
+function removeFromBasket(productId) {
+  basket = basket.filter(b => b.productId !== productId);
+  document.getElementById(`card-${productId}`).classList.remove('selected');
+  document.getElementById(`add-${productId}`).classList.remove('in-basket');
+  document.getElementById(`add-${productId}`).textContent = '+ Add to List';
+  renderBasket();
+}
+
+// ─────────────────────────────────────────────
+// MODAL
+// ─────────────────────────────────────────────
+function openModal() {
+  if (basket.length === 0) return;
+
+  // Populate summary
+  const summary = document.getElementById('modal-summary-items');
+  summary.innerHTML = basket.map(item => `
+    <div class="summary-item">
+      <span>${item.emoji} ${item.name}</span>
+      <span class="summary-size">${item.size}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('modal-form-view').style.display = 'block';
+  document.getElementById('success-screen').classList.remove('show');
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close on overlay click
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ─────────────────────────────────────────────
+// CONFIG — paste your values here after setup
+// ─────────────────────────────────────────────
+const GOOGLE_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+const SECRET_TOKEN      = 'YOUR_SECRET_TOKEN_HERE'; // must match Apps Script
+
+// ─────────────────────────────────────────────
+// FORM SUBMISSION
+// ─────────────────────────────────────────────
+async function submitRedemption() {
+  // Basic validation
+  const required = ['f-firstname','f-lastname','f-email','f-addr1','f-city','f-postcode'];
+  let valid = true;
+  required.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.style.borderColor = '#ff4444';
+      valid = false;
+      el.addEventListener('input', () => el.style.borderColor = '', { once: true });
+    }
+  });
+  if (!valid) return;
+
+  // Build submission object
+  const ref = 'XYZ-' + Date.now().toString(36).toUpperCase();
+  const submission = {
+    ref,
+    token: SECRET_TOKEN,
+    timestamp: new Date().toISOString(),
+    firstName:  document.getElementById('f-firstname').value.trim(),
+    lastName:   document.getElementById('f-lastname').value.trim(),
+    email:      document.getElementById('f-email').value.trim(),
+    address1:   document.getElementById('f-addr1').value.trim(),
+    address2:   document.getElementById('f-addr2').value.trim(),
+    city:       document.getElementById('f-city').value.trim(),
+    postcode:   document.getElementById('f-postcode').value.trim(),
+    country:    document.getElementById('f-country').value,
+    notes:      document.getElementById('f-notes').value.trim(),
+    items:      basket.map(b => `${b.name} (${b.size})`).join(' | '),
+    itemCount:  basket.length,
+  };
+
+  // Disable button, show loading
+  const submitBtn = document.querySelector('.form-submit');
+  submitBtn.textContent = 'SENDING…';
+  submitBtn.disabled = true;
+
+  try {
+    // Google Apps Script requires no-cors for cross-origin POSTs from static sites
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(submission),
+    });
+    // no-cors means we can't read the response — treat reaching here as success
+    onSubmitSuccess(ref);
+  } catch (err) {
+    // Network failure fallback — save locally and flag for manual follow-up
+    console.warn('Google Sheets POST failed, saving locally:', err);
+    const existing = JSON.parse(localStorage.getItem('xyz_fallback') || '[]');
+    existing.push(submission);
+    localStorage.setItem('xyz_fallback', JSON.stringify(existing));
+    // Still show success to user — you can check fallback data in admin
+    onSubmitSuccess(ref, true);
+  } finally {
+    submitBtn.textContent = 'CONFIRM REDEMPTION →';
+    submitBtn.disabled = false;
+  }
+}
+
+function onSubmitSuccess(ref, isFallback = false) {
+  document.getElementById('modal-form-view').style.display = 'none';
+  const successScreen = document.getElementById('success-screen');
+  successScreen.classList.add('show');
+  document.getElementById('ref-code-display').textContent = ref;
+  if (isFallback) {
+    const note = document.getElementById('fallback-note');
+    if (note) note.style.display = 'block';
+  }
+
+  // Clear basket
+  basket.forEach(item => {
+    document.getElementById(`card-${item.productId}`).classList.remove('selected');
+    document.getElementById(`add-${item.productId}`).classList.remove('in-basket');
+    document.getElementById(`add-${item.productId}`).textContent = '+ Add to List';
+  });
+  basket = [];
+  selectedSizes = {};
+  renderBasket();
+}
+
+// ─────────────────────────────────────────────
+// ADMIN PANEL (logo click 5x)
+// ─────────────────────────────────────────────
+let logoClicks = 0;
+let logoTimer;
+document.querySelector('.logo').addEventListener('click', () => {
+  logoClicks++;
+  clearTimeout(logoTimer);
+  logoTimer = setTimeout(() => logoClicks = 0, 2000);
+  if (logoClicks >= 5) {
+    logoClicks = 0;
+    openAdmin();
+  }
+});
+
+function openAdmin() {
+  const panel = document.getElementById('admin-panel');
+  const content = document.getElementById('admin-content');
+  const fallback = JSON.parse(localStorage.getItem('xyz_fallback') || '[]');
+
+  if (fallback.length === 0) {
+    content.innerHTML = `<div class="no-submissions">ALL SUBMISSIONS GO TO GOOGLE SHEETS<br><br>
+      <span style="color:#555;font-size:0.65rem">Any network-failure fallback entries would appear here</span></div>`;
+  } else {
+    const sorted = [...fallback].reverse();
+    content.innerHTML = `
+      <div style="background:#1a0800;border:1px solid #ff8800;padding:16px 20px;border-radius:2px;margin-bottom:24px;
+        font-family:'DM Mono',monospace;font-size:0.7rem;color:#ff8800;letter-spacing:1px;">
+        ⚠ ${fallback.length} FALLBACK SUBMISSION${fallback.length>1?'S':''} — these failed to reach Google Sheets. Export and add manually.
+      </div>
+      ${sorted.map(s => `
+        <div class="submission-card" style="border-color:#ff8800">
+          <h3>REF: ${s.ref} — ${new Date(s.timestamp).toLocaleString()} ⚠ FALLBACK</h3>
+          <dl class="submission-detail">
+            <dt>Name</dt><dd>${s.firstName} ${s.lastName}</dd>
+            <dt>Email</dt><dd>${s.email}</dd>
+            <dt>Address</dt><dd>${s.address1}${s.address2 ? ', ' + s.address2 : ''}</dd>
+            <dt>City</dt><dd>${s.city}</dd>
+            <dt>Postcode</dt><dd>${s.postcode}</dd>
+            <dt>Country</dt><dd>${s.country}</dd>
+            ${s.notes ? `<dt>Notes</dt><dd>${s.notes}</dd>` : ''}
+          </dl>
+          <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#555;letter-spacing:2px;margin-bottom:8px;text-transform:uppercase;">Items:</div>
+          <div class="items-list">
+            ${(s.items||'').split(' | ').map(i => `<span class="item-tag">${i}</span>`).join('')}
+          </div>
+        </div>`).join('')}`;
+  }
+
+  panel.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAdmin() {
+  document.getElementById('admin-panel').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function exportJSON() {
+  const data = localStorage.getItem('xyz_fallback') || '[]';
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'xyz-fallback-redemptions.json'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportCSV() {
+  const submissions = JSON.parse(localStorage.getItem('xyz_fallback') || '[]');
+  if (!submissions.length) { alert('No fallback submissions to export.'); return; }
+
+  const headers = ['Ref','Timestamp','First Name','Last Name','Email','Address 1','Address 2','City','Postcode','Country','Notes','Items'];
+  const rows = submissions.map(s => [
+    s.ref, s.timestamp,
+    s.firstName, s.lastName, s.email,
+    s.address1, s.address2,
+    s.city, s.postcode, s.country,
+    s.notes, s.items
+  ].map(v => `"${(v||'').replace(/"/g,'""')}"`));
+
+  const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'xyz-fallback-redemptions.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+renderProducts();
+renderBasket();
+</script>
+</body>
+</html>
