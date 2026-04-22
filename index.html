@@ -3,285 +3,503 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XYZ — Select Your Rewards</title>
+<title>Zigurat — 10 Years of Magic 🎉</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Paytone+One&family=Nunito:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --black: #0a0a0a;
-    --white: #f5f0e8;
-    --cream: #ede8dc;
-    --accent: #98ef60;
-    --muted: #3a3a3a;
-    --border: #222;
+    --bg:       #fdf6ee;
+    --cream:    #fff8f0;
+    --lavender: #e8dff7;
+    --mint:     #d4f2e4;
+    --peach:    #fde8d8;
+    --sky:      #d6eefb;
+    --lemon:    #fef5c2;
+    --rose:     #fddde6;
+    --ink:      #2d2640;
+    --muted:    #8c849e;
+    --border:   #e8e0f0;
+    --accent1:  #b99ef5;   /* soft violet */
+    --accent2:  #7cd4a3;   /* soft mint */
+    --accent3:  #f9a870;   /* soft peach */
     --basket-h: 120px;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: var(--black);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
     overflow-x: hidden;
+  }
+
+  /* ─── BG SHAPES ─── */
+  .bg-shapes {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bg-shapes svg {
+    position: absolute;
+    opacity: 0.07;
+  }
+  .shape1  { top: -80px;  left: -80px;  width: 420px; animation: drift1 18s ease-in-out infinite; }
+  .shape2  { top: 10%;   right: -60px;  width: 300px; animation: drift2 22s ease-in-out infinite; }
+  .shape3  { top: 38%;   left: 8%;      width: 260px; animation: drift1 26s ease-in-out infinite reverse; }
+  .shape4  { top: 55%;   right: 5%;     width: 380px; animation: drift2 20s ease-in-out infinite; }
+  .shape5  { bottom: -60px; left: 20%;  width: 340px; animation: drift1 24s ease-in-out infinite; }
+  .shape6  { top: 70%;   left: -40px;   width: 220px; animation: drift2 16s ease-in-out infinite reverse; }
+  .shape7  { top: 25%;   right: 20%;    width: 180px; animation: drift1 30s ease-in-out infinite; }
+
+  @keyframes drift1 {
+    0%, 100% { transform: translate(0,0) rotate(0deg); }
+    33%  { transform: translate(18px, -22px) rotate(6deg); }
+    66%  { transform: translate(-12px, 16px) rotate(-4deg); }
+  }
+  @keyframes drift2 {
+    0%, 100% { transform: translate(0,0) rotate(0deg); }
+    33%  { transform: translate(-20px, 14px) rotate(-8deg); }
+    66%  { transform: translate(16px, -18px) rotate(5deg); }
+  }
+
+  /* Zigurat polygon shapes as bg */
+  .bg-poly { position: absolute; opacity: 0.12; }
+
+  /* ─── CONFETTI DOTS ─── */
+  .confetti-dot {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: confettiFloat linear infinite;
+  }
+  @keyframes confettiFloat {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
   }
 
   /* ─── HEADER ─── */
   header {
     position: sticky; top: 0; z-index: 100;
-    background: var(--black);
-    border-bottom: 1px solid var(--border);
+    background: rgba(253,246,238,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--border);
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 40px;
-    height: 64px;
+    height: 68px;
   }
-  .logo {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
+  .logo { display: flex; align-items: center; cursor: pointer; gap: 10px; }
   .header-tag {
     font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     letter-spacing: 2px;
     color: var(--muted);
     text-transform: uppercase;
   }
+  .anni-badge {
+    background: linear-gradient(135deg, var(--accent1), var(--accent3));
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    animation: badgePop 2s ease-in-out infinite;
+    box-shadow: 0 3px 12px rgba(185,158,245,0.4);
+  }
+  @keyframes badgePop {
+    0%,100% { transform: scale(1); box-shadow: 0 3px 12px rgba(185,158,245,0.4); }
+    50%     { transform: scale(1.05); box-shadow: 0 5px 18px rgba(185,158,245,0.6); }
+  }
 
   /* ─── HERO ─── */
   .hero {
-    padding: 80px 40px 60px;
-    border-bottom: 1px solid var(--border);
+    position: relative;
+    padding: 80px 40px 70px;
+    border-bottom: 2px solid var(--border);
+    z-index: 1;
+    overflow: hidden;
+  }
+  .hero-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: end;
+    gap: 48px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
   }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--lavender);
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: var(--accent1);
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+    animation: slideInLeft 0.6s ease both;
+  }
+  .hero-eyebrow .sparkle { font-size: 1rem; animation: spin 3s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   .hero h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4rem, 10vw, 9rem);
-    line-height: 0.9;
-    color: var(--white);
+    font-family: 'Paytone One', sans-serif;
+    font-size: clamp(3.2rem, 8vw, 7rem);
+    line-height: 1.0;
+    color: var(--ink);
+    animation: slideInLeft 0.7s ease both 0.1s;
   }
-  .hero h1 span { color: var(--accent); }
-  .hero p {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: #888;
-    max-width: 380px;
-    margin-bottom: 16px;
+  .hero h1 .line2 { color: var(--accent1); display: block; }
+  .hero h1 .line3 { color: var(--accent3); display: block; }
+
+  .hero-sub {
+    margin-top: 20px;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--muted);
+    max-width: 400px;
+    animation: slideInLeft 0.8s ease both 0.2s;
   }
+  .hero-sub strong { color: var(--ink); font-weight: 700; }
+
   .step-pills {
     display: flex; gap: 8px; flex-wrap: wrap;
+    margin-top: 24px;
+    animation: slideInLeft 0.9s ease both 0.3s;
   }
   .pill {
-    background: var(--muted);
-    border-radius: 2px;
-    padding: 4px 12px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 1px;
-    color: #aaa;
-    text-transform: uppercase;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 30px;
+    padding: 5px 14px;
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: var(--muted);
+    transition: all 0.2s;
   }
-  .pill.active { background: var(--accent); color: var(--black); }
+  .pill.active {
+    background: var(--lavender);
+    border-color: var(--accent1);
+    color: var(--accent1);
+  }
 
-  /* ─── PRODUCTS GRID ─── */
+  /* Hero right: big "10" display */
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: slideInRight 0.8s ease both 0.2s;
+  }
+  .big-ten {
+    font-family: 'Paytone One', sans-serif;
+    font-size: clamp(8rem, 18vw, 14rem);
+    line-height: 1;
+    background: linear-gradient(135deg, var(--accent1) 0%, var(--accent3) 60%, #f9d87a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    filter: drop-shadow(0 8px 24px rgba(185,158,245,0.25));
+  }
+  .ten-label {
+    font-family: 'Paytone One', sans-serif;
+    font-size: 1.2rem;
+    color: var(--ink);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: -8px;
+    opacity: 0.6;
+  }
+  .hero-emoji-ring {
+    position: absolute;
+    inset: -20px;
+    pointer-events: none;
+  }
+  .hero-emoji-ring span {
+    position: absolute;
+    font-size: 1.6rem;
+    animation: orbit linear infinite;
+  }
+
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-24px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ─── SECTION LABEL ─── */
   .section-label {
-    padding: 24px 40px 16px;
+    position: relative;
+    z-index: 1;
+    padding: 28px 40px 18px;
     font-family: 'DM Mono', monospace;
     font-size: 0.65rem;
     letter-spacing: 3px;
-    color: #555;
+    color: var(--muted);
     text-transform: uppercase;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before {
+    content: '🎁';
+    font-size: 1rem;
   }
 
+  /* ─── PRODUCTS GRID ─── */
   .products {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border-bottom: 1px solid var(--border);
-    padding-bottom: var(--basket-h);
+    gap: 20px;
+    padding: 28px 40px;
+    padding-bottom: calc(var(--basket-h) + 40px);
   }
 
   .product-card {
-    background: var(--black);
-    padding: 24px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 20px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
     position: relative;
-    display: flex; flex-direction: column; gap: 16px;
+    display: flex; flex-direction: column; gap: 14px;
+    animation: cardIn 0.5s ease both;
   }
-  .product-card:hover { background: #111; }
-  .product-card.selected { background: #0f1a00; }
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(185,158,245,0.18);
+    border-color: var(--accent1);
+  }
+  .product-card.selected {
+    border-color: var(--accent2);
+    background: linear-gradient(135deg, #f0fdf6, white);
+    box-shadow: 0 8px 28px rgba(124,212,163,0.25);
+  }
   .product-card.selected::after {
     content: '✓';
-    position: absolute; top: 12px; right: 12px;
-    background: var(--accent);
-    color: var(--black);
-    width: 22px; height: 22px;
+    position: absolute; top: 14px; right: 14px;
+    background: var(--accent2);
+    color: white;
+    width: 26px; height: 26px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.7rem;
-    font-weight: 700;
+    font-size: 0.8rem;
+    font-weight: 800;
+    box-shadow: 0 3px 10px rgba(124,212,163,0.4);
   }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Stagger */
+  .product-card:nth-child(1)  { animation-delay: 0.05s; }
+  .product-card:nth-child(2)  { animation-delay: 0.10s; }
+  .product-card:nth-child(3)  { animation-delay: 0.15s; }
+  .product-card:nth-child(4)  { animation-delay: 0.20s; }
+  .product-card:nth-child(5)  { animation-delay: 0.25s; }
+  .product-card:nth-child(6)  { animation-delay: 0.30s; }
+  .product-card:nth-child(7)  { animation-delay: 0.35s; }
+  .product-card:nth-child(8)  { animation-delay: 0.40s; }
+  .product-card:nth-child(9)  { animation-delay: 0.45s; }
+  .product-card:nth-child(10) { animation-delay: 0.50s; }
+  .product-card:nth-child(11) { animation-delay: 0.55s; }
+  .product-card:nth-child(12) { animation-delay: 0.60s; }
+  .product-card:nth-child(13) { animation-delay: 0.65s; }
+  .product-card:nth-child(14) { animation-delay: 0.70s; }
+  .product-card:nth-child(15) { animation-delay: 0.75s; }
 
   .product-img {
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
-    background: #181818;
-    border-radius: 2px;
+    border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
-    color: #333;
     overflow: hidden;
     position: relative;
+    transition: transform 0.3s;
   }
+  .product-card:hover .product-img { transform: scale(1.02); }
   .product-img img { width: 100%; height: 100%; object-fit: cover; }
   .product-img .emoji-placeholder {
-    font-size: 4rem;
-    filter: grayscale(0.3);
+    font-size: 4.5rem;
+    filter: none;
   }
 
+  /* Pastel bg per card */
+  .product-card:nth-child(1)  .product-img { background: var(--lavender); }
+  .product-card:nth-child(2)  .product-img { background: var(--mint); }
+  .product-card:nth-child(3)  .product-img { background: var(--peach); }
+  .product-card:nth-child(4)  .product-img { background: var(--sky); }
+  .product-card:nth-child(5)  .product-img { background: var(--lemon); }
+  .product-card:nth-child(6)  .product-img { background: var(--rose); }
+  .product-card:nth-child(7)  .product-img { background: var(--lavender); }
+  .product-card:nth-child(8)  .product-img { background: var(--mint); }
+  .product-card:nth-child(9)  .product-img { background: var(--peach); }
+  .product-card:nth-child(10) .product-img { background: var(--sky); }
+  .product-card:nth-child(11) .product-img { background: var(--lemon); }
+  .product-card:nth-child(12) .product-img { background: var(--rose); }
+  .product-card:nth-child(13) .product-img { background: var(--lavender); }
+  .product-card:nth-child(14) .product-img { background: var(--mint); }
+  .product-card:nth-child(15) .product-img { background: var(--peach); }
+
   .product-name {
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--ink);
   }
   .product-category {
     font-family: 'DM Mono', monospace;
     font-size: 0.6rem;
     letter-spacing: 2px;
-    color: #555;
+    color: var(--muted);
     text-transform: uppercase;
+    margin-bottom: 2px;
   }
 
-  .size-selector {
-    display: flex; gap: 6px; flex-wrap: wrap;
-  }
+  .size-selector { display: flex; gap: 6px; flex-wrap: wrap; }
   .size-btn {
-    border: 1px solid var(--muted);
+    border: 2px solid var(--border);
     background: transparent;
-    color: #888;
+    color: var(--muted);
     padding: 4px 10px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.68rem;
     cursor: pointer;
-    border-radius: 1px;
+    border-radius: 8px;
     transition: all 0.15s;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
   }
-  .size-btn:hover { border-color: var(--white); color: var(--white); }
-  .size-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(200,255,0,0.07); }
+  .size-btn:hover { border-color: var(--accent1); color: var(--accent1); background: var(--lavender); }
+  .size-btn.active { border-color: var(--accent1); color: var(--accent1); background: var(--lavender); }
 
   .add-btn {
     width: 100%;
-    padding: 10px;
-    background: transparent;
-    border: 1px solid var(--muted);
-    color: #888;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 2px;
+    padding: 11px;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    color: var(--muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s;
-    border-radius: 1px;
+    border-radius: 12px;
   }
-  .add-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .add-btn.in-basket { background: var(--accent); color: var(--black); border-color: var(--accent); font-weight: 600; }
+  .add-btn:hover { border-color: var(--accent2); color: var(--accent2); background: var(--mint); }
+  .add-btn.in-basket {
+    background: var(--mint);
+    color: #2e8b60;
+    border-color: var(--accent2);
+    font-weight: 800;
+  }
 
   /* ─── BASKET BAR ─── */
   .basket-bar {
     position: fixed; bottom: 0; left: 0; right: 0;
-    background: #0f0f0f;
-    border-top: 1px solid var(--border);
+    background: white;
+    border-top: 2px solid var(--border);
     height: var(--basket-h);
     display: flex; align-items: center;
     padding: 0 24px;
     gap: 16px;
     z-index: 200;
-    transition: transform 0.3s ease;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 -8px 40px rgba(185,158,245,0.15);
   }
-  .basket-bar.empty { transform: translateY(100%); }
+  .basket-bar.empty { transform: translateY(calc(100% + 2px)); }
 
   .basket-scroll {
     flex: 1;
     display: flex;
-    gap: 12px;
+    gap: 10px;
     overflow-x: auto;
     scrollbar-width: thin;
-    scrollbar-color: var(--muted) transparent;
+    scrollbar-color: var(--border) transparent;
     padding: 8px 0;
   }
 
   .basket-item {
     flex-shrink: 0;
-    background: var(--muted);
-    border-radius: 2px;
+    background: var(--lavender);
+    border-radius: 14px;
     padding: 8px 12px;
     display: flex; align-items: center; gap: 10px;
     min-width: 160px;
     max-width: 200px;
-    position: relative;
+    animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes popIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
   }
   .basket-item-emoji { font-size: 1.4rem; }
   .basket-item-info { flex: 1; overflow: hidden; }
-  .basket-item-name {
-    font-size: 0.75rem;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .basket-item-size {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    color: #aaa;
-    letter-spacing: 1px;
-  }
+  .basket-item-name { font-size: 0.75rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink); }
+  .basket-item-size { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--accent1); letter-spacing: 1px; }
   .basket-remove {
     background: none; border: none;
-    color: #666; cursor: pointer; font-size: 1rem; line-height: 1;
-    padding: 0 2px;
-    transition: color 0.15s;
+    color: var(--muted); cursor: pointer; font-size: 0.9rem; line-height: 1;
+    transition: color 0.15s, transform 0.15s;
   }
-  .basket-remove:hover { color: #ff4444; }
+  .basket-remove:hover { color: #e07090; transform: scale(1.2); }
 
   .basket-count {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    color: var(--accent);
+    font-family: 'Paytone One', sans-serif;
+    font-size: 1.3rem;
+    color: var(--accent1);
     white-space: nowrap;
-    min-width: 60px;
+    min-width: 70px;
   }
 
   .redeem-btn {
-    background: var(--accent);
-    color: var(--black);
+    background: linear-gradient(135deg, var(--accent1), #c9adf8);
+    color: white;
     border: none;
     padding: 14px 28px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
-    letter-spacing: 2px;
+    font-family: 'Paytone One', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
     cursor: pointer;
-    border-radius: 2px;
-    transition: opacity 0.2s, transform 0.1s;
+    border-radius: 16px;
+    transition: opacity 0.2s, transform 0.2s;
     white-space: nowrap;
+    box-shadow: 0 6px 20px rgba(185,158,245,0.45);
   }
-  .redeem-btn:hover { opacity: 0.85; }
-  .redeem-btn:active { transform: scale(0.98); }
+  .redeem-btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(185,158,245,0.55); }
+  .redeem-btn:active { transform: scale(0.97); }
 
-  /* ─── MODAL OVERLAY ─── */
+  /* ─── MODAL ─── */
   .modal-overlay {
     position: fixed; inset: 0;
-    background: rgba(0,0,0,0.9);
+    background: rgba(45,38,64,0.6);
+    backdrop-filter: blur(6px);
     z-index: 500;
     display: flex; align-items: center; justify-content: center;
     opacity: 0; pointer-events: none;
@@ -291,159 +509,164 @@
   .modal-overlay.open { opacity: 1; pointer-events: all; }
 
   .modal {
-    background: #111;
-    border: 1px solid var(--border);
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 24px;
     max-width: 560px;
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
-    border-radius: 2px;
-    transform: translateY(20px);
-    transition: transform 0.3s;
+    transform: translateY(30px) scale(0.97);
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 30px 80px rgba(185,158,245,0.25);
   }
-  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
 
   .modal-header {
     padding: 32px 32px 0;
     display: flex; align-items: flex-start; justify-content: space-between;
   }
   .modal-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.4rem;
-    letter-spacing: 2px;
-    line-height: 1;
+    font-family: 'Paytone One', sans-serif;
+    font-size: 2.2rem;
+    color: var(--ink);
+    line-height: 1.1;
   }
+  .modal-title span { color: var(--accent1); }
   .modal-close {
-    background: none; border: none; color: #666;
-    font-size: 1.5rem; cursor: pointer; line-height: 1;
-    padding: 4px;
+    background: var(--lavender); border: none; color: var(--accent1);
+    width: 34px; height: 34px; border-radius: 50%;
+    font-size: 1rem; cursor: pointer; line-height: 1;
+    transition: background 0.15s, transform 0.15s;
+    display: flex; align-items: center; justify-content: center;
   }
-  .modal-close:hover { color: var(--white); }
+  .modal-close:hover { background: var(--rose); color: #d45; transform: rotate(90deg); }
 
   .modal-body { padding: 24px 32px 32px; }
 
   .modal-basket-summary {
-    background: #0a0a0a;
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    padding: 16px;
+    background: var(--lavender);
+    border-radius: 16px;
+    padding: 16px 20px;
     margin-bottom: 24px;
   }
   .modal-basket-summary h3 {
     font-family: 'DM Mono', monospace;
     font-size: 0.6rem;
     letter-spacing: 3px;
-    color: #555;
+    color: var(--accent1);
     text-transform: uppercase;
     margin-bottom: 12px;
+    font-weight: 500;
   }
   .summary-item {
     display: flex; justify-content: space-between; align-items: center;
     padding: 6px 0;
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid rgba(185,158,245,0.2);
     font-size: 0.85rem;
+    font-weight: 600;
   }
   .summary-item:last-child { border-bottom: none; }
   .summary-size {
     font-family: 'DM Mono', monospace;
     font-size: 0.65rem;
-    color: var(--accent);
-    background: rgba(200,255,0,0.1);
+    color: var(--accent1);
+    background: white;
     padding: 2px 8px;
-    border-radius: 1px;
+    border-radius: 8px;
   }
 
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-  .form-group {
-    display: flex; flex-direction: column; gap: 6px;
-  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
   .form-group.full { grid-column: 1 / -1; }
 
   label {
     font-family: 'DM Mono', monospace;
     font-size: 0.6rem;
     letter-spacing: 2px;
-    color: #555;
+    color: var(--muted);
     text-transform: uppercase;
+    font-weight: 500;
   }
   input, select, textarea {
-    background: #0a0a0a;
-    border: 1px solid var(--border);
-    color: var(--white);
+    background: var(--bg);
+    border: 2px solid var(--border);
+    color: var(--ink);
     padding: 10px 14px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    border-radius: 1px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 12px;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background 0.2s;
   }
-  input:focus, select:focus, textarea:focus { border-color: var(--accent); }
-  input::placeholder, textarea::placeholder { color: #444; }
-  select option { background: #111; }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent1); background: white; }
+  input::placeholder, textarea::placeholder { color: #c0b8d0; }
+  select option { background: white; }
   textarea { resize: vertical; min-height: 70px; }
 
   .form-submit {
     width: 100%;
     margin-top: 20px;
     padding: 16px;
-    background: var(--accent);
-    color: var(--black);
+    background: linear-gradient(135deg, var(--accent1), var(--accent3));
+    color: white;
     border: none;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 3px;
+    font-family: 'Paytone One', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
     cursor: pointer;
-    border-radius: 2px;
-    transition: opacity 0.2s;
+    border-radius: 16px;
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 6px 20px rgba(185,158,245,0.4);
   }
-  .form-submit:hover { opacity: 0.85; }
+  .form-submit:hover { opacity: 0.9; transform: translateY(-2px); }
 
-  /* ─── SUCCESS STATE ─── */
+  /* ─── SUCCESS ─── */
   .success-screen {
     display: none;
     text-align: center;
     padding: 48px 32px;
   }
   .success-screen.show { display: block; }
-  .success-icon {
-    font-size: 4rem;
-    margin-bottom: 24px;
+  .success-icon { font-size: 4rem; margin-bottom: 24px; animation: successBounce 0.6s cubic-bezier(0.34,1.56,0.64,1); }
+  @keyframes successBounce {
+    from { transform: scale(0.3) rotate(-20deg); opacity: 0; }
+    to   { transform: scale(1) rotate(0deg); opacity: 1; }
   }
   .success-screen h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
-    letter-spacing: 3px;
-    color: var(--accent);
+    font-family: 'Paytone One', sans-serif;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+    color: var(--accent1);
     margin-bottom: 12px;
   }
   .success-screen p {
-    color: #888;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: 8px;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 6px;
+    font-weight: 500;
   }
   .ref-code {
     display: inline-block;
-    background: #0a0a0a;
-    border: 1px solid var(--accent);
-    color: var(--accent);
+    background: var(--lavender);
+    border: 2px solid var(--accent1);
+    color: var(--accent1);
     font-family: 'DM Mono', monospace;
     font-size: 1rem;
-    padding: 10px 20px;
-    border-radius: 2px;
+    padding: 10px 24px;
+    border-radius: 14px;
     margin: 16px 0;
     letter-spacing: 3px;
+    font-weight: 500;
   }
 
-  /* ─── ADMIN VIEW ─── */
+  /* ─── ADMIN ─── */
   #admin-panel {
     display: none;
     position: fixed; inset: 0;
-    background: var(--black);
+    background: var(--bg);
     z-index: 1000;
     overflow-y: auto;
     padding: 40px;
@@ -452,31 +675,32 @@
   .admin-header {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 32px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 2px solid var(--border);
     padding-bottom: 16px;
   }
   .admin-header h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    color: var(--accent);
-    letter-spacing: 3px;
+    font-family: 'Paytone One', sans-serif;
+    font-size: 1.8rem;
+    color: var(--accent1);
+    letter-spacing: 2px;
   }
   .admin-close-btn {
-    background: var(--muted); border: none; color: var(--white);
+    background: var(--lavender); border: none; color: var(--accent1);
     padding: 8px 16px; cursor: pointer; font-family: 'DM Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 1px; border-radius: 2px;
+    font-size: 0.7rem; letter-spacing: 1px; border-radius: 10px;
+    font-weight: 500;
   }
   .submission-card {
-    background: #111;
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 16px;
     padding: 24px;
     margin-bottom: 16px;
   }
   .submission-card h3 {
     font-family: 'DM Mono', monospace;
     font-size: 0.7rem;
-    color: var(--accent);
+    color: var(--accent1);
     letter-spacing: 2px;
     margin-bottom: 16px;
     text-transform: uppercase;
@@ -491,49 +715,50 @@
   .submission-detail dt {
     font-family: 'DM Mono', monospace;
     font-size: 0.6rem;
-    color: #555;
+    color: var(--muted);
     letter-spacing: 1px;
     text-transform: uppercase;
     align-self: center;
   }
-  .submission-detail dd { color: var(--white); }
+  .submission-detail dd { color: var(--ink); font-weight: 600; }
   .items-list { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
   .item-tag {
-    background: rgba(200,255,0,0.1);
-    border: 1px solid rgba(200,255,0,0.3);
-    color: var(--accent);
+    background: var(--lavender);
+    border: 1px solid var(--accent1);
+    color: var(--accent1);
     padding: 3px 10px;
     font-family: 'DM Mono', monospace;
     font-size: 0.65rem;
-    border-radius: 1px;
+    border-radius: 8px;
     letter-spacing: 1px;
   }
   .no-submissions {
     text-align: center;
     padding: 80px;
-    color: #444;
+    color: var(--muted);
     font-family: 'DM Mono', monospace;
     font-size: 0.8rem;
     letter-spacing: 2px;
   }
   .export-btn {
-    background: var(--muted); border: none; color: var(--white);
+    background: var(--lavender); border: none; color: var(--accent1);
     padding: 10px 20px; cursor: pointer; font-family: 'DM Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 1px; border-radius: 2px;
+    font-size: 0.7rem; letter-spacing: 1px; border-radius: 10px;
     transition: background 0.2s;
   }
-  .export-btn:hover { background: #555; }
+  .export-btn:hover { background: var(--mint); color: #2e8b60; }
 
   /* ─── RESPONSIVE ─── */
   @media (max-width: 768px) {
     header { padding: 0 20px; }
-    .hero { grid-template-columns: 1fr; padding: 48px 20px 40px; gap: 24px; }
-    .hero h1 { font-size: clamp(3.5rem, 15vw, 6rem); }
+    .hero { padding: 48px 20px 40px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+    .hero-right { display: none; }
     .section-label { padding: 16px 20px 12px; }
-    .products { grid-template-columns: repeat(2, 1fr); }
-    .product-card { padding: 16px; }
-    .basket-bar { padding: 0 16px; gap: 10px; }
-    .modal { max-width: 100%; }
+    .products { grid-template-columns: repeat(2, 1fr); padding: 16px 16px; gap: 12px; }
+    .product-card { padding: 14px; }
+    .basket-bar { padding: 0 14px; gap: 10px; }
+    .modal { max-width: 100%; border-radius: 20px 20px 0 0; }
     .modal-header, .modal-body { padding-left: 20px; padding-right: 20px; }
     .form-grid { grid-template-columns: 1fr; }
     #admin-panel { padding: 20px; }
@@ -542,69 +767,133 @@
 </head>
 <body>
 
+<!-- ─── BACKGROUND SHAPES ─── -->
+<div class="bg-shapes">
+  <!-- Big polygon clusters inspired by the Zigurat logo -->
+  <svg class="shape1" viewBox="0 0 657 574" xmlns="http://www.w3.org/2000/svg">
+    <polygon fill="#b99ef5" points="447 515.94 546 574.1 546 457.77 447 399.6 447 515.94"/>
+    <polygon fill="#7cd4a3" points="657 399.6 559 457.77 559 574.11 657 515.94 657 399.6"/>
+    <polygon fill="#68d8db" points="434 399.6 335 457.77 335 574.1 434 515.94 434 399.6"/>
+    <polygon fill="#fdc98a" points="434 0 335 58.16 335 174.51 434 116.34 434 0"/>
+    <polygon fill="#f9847a" points="434 257.97 335 199.8 335 316.14 434 374.31 434 257.97"/>
+    <polygon fill="#d647c2" points="551 199.8 447 257.97 447 374.31 551 316.14 551 199.8"/>
+  </svg>
+  <svg class="shape2" viewBox="0 0 657 574" xmlns="http://www.w3.org/2000/svg">
+    <polygon fill="#6a96e8" points="210 515.94 111 574.1 111 457.77 210 399.6 210 515.94"/>
+    <polygon fill="#a88bcf" points="0 399.6 98 457.77 98 574.11 0 515.94 0 399.6"/>
+    <polygon fill="#5daaee" points="223 399.6 322 457.77 322 574.1 223 515.94 223 399.6"/>
+    <polygon fill="#f4e040" points="223 0 322 58.16 322 174.51 223 116.34 223 0"/>
+    <polygon fill="#f9907a" points="223 257.97 322 199.8 322 316.14 223 374.31 223 257.97"/>
+    <polygon fill="#5ed4a0" points="106 199.8 210 257.97 210 374.31 106 316.14 106 199.8"/>
+  </svg>
+  <svg class="shape3" viewBox="0 0 657 574" xmlns="http://www.w3.org/2000/svg">
+    <polygon fill="#b99ef5" points="447 515.94 546 574.1 546 457.77 447 399.6 447 515.94"/>
+    <polygon fill="#f9a870" points="657 399.6 559 457.77 559 574.11 657 515.94 657 399.6"/>
+    <polygon fill="#7cd4a3" points="434 399.6 335 457.77 335 574.1 434 515.94 434 399.6"/>
+  </svg>
+  <svg class="shape4" viewBox="0 0 657 574" xmlns="http://www.w3.org/2000/svg">
+    <polygon fill="#f9847a" points="434 257.97 335 199.8 335 316.14 434 374.31 434 257.97"/>
+    <polygon fill="#b99ef5" points="551 199.8 447 257.97 447 374.31 551 316.14 551 199.8"/>
+    <polygon fill="#68d8db" points="210 515.94 111 574.1 111 457.77 210 399.6 210 515.94"/>
+    <polygon fill="#6a96e8" points="0 399.6 98 457.77 98 574.11 0 515.94 0 399.6"/>
+    <polygon fill="#fdc98a" points="223 0 322 58.16 322 174.51 223 116.34 223 0"/>
+    <polygon fill="#5ed4a0" points="106 199.8 210 257.97 210 374.31 106 316.14 106 199.8"/>
+  </svg>
+  <svg class="shape5" viewBox="0 0 657 574" xmlns="http://www.w3.org/2000/svg">
+    <polygon fill="#a88bcf" points="0 399.6 98 457.77 98 574.11 0 515.94 0 399.6"/>
+    <polygon fill="#5daaee" points="223 399.6 322 457.77 322 574.1 223 515.94 223 399.6"/>
+    <polygon fill="#f4e040" points="223 0 322 58.16 322 174.51 223 116.34 223 0"/>
+  </svg>
+  <svg class="shape6" viewBox="0 0 657 574" xmlns="http://www.w3.org/2000/svg">
+    <polygon fill="#7cd4a3" points="657 399.6 559 457.77 559 574.11 657 515.94 657 399.6"/>
+    <polygon fill="#f9907a" points="223 257.97 322 199.8 322 316.14 223 374.31 223 257.97"/>
+  </svg>
+  <svg class="shape7" viewBox="0 0 657 574" xmlns="http://www.w3.org/2000/svg">
+    <polygon fill="#b99ef5" points="434 257.97 335 199.8 335 316.14 434 374.31 434 257.97"/>
+    <polygon fill="#fdc98a" points="434 0 335 58.16 335 174.51 434 116.34 434 0"/>
+    <polygon fill="#68d8db" points="434 399.6 335 457.77 335 574.1 434 515.94 434 399.6"/>
+  </svg>
+</div>
+
 <!-- ─── HEADER ─── -->
 <header>
   <div class="logo">
-  <!-- Zig_Base_Logo mark (scaled small) -->
-  <svg width="32" height="28" viewBox="0 0 657 574.11" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
-    <polygon fill="#ff9642" points="447 515.94 546 574.1 546 457.77 447 399.6 447 515.94"/>
-    <polygon fill="#98ef60" points="657 399.6 559 457.77 559 574.11 657 515.94 657 399.6"/>
-    <polygon fill="#05dde2" points="434 399.6 335 457.77 335 574.1 434 515.94 434 399.6"/>
-    <polygon fill="#ffc373" points="434 0 335 58.16 335 174.51 434 116.34 434 0"/>
-    <polygon fill="#ff3740" points="434 257.97 335 199.8 335 316.14 434 374.31 434 257.97"/>
-    <polygon fill="#d647c2" points="551 199.8 447 257.97 447 374.31 551 316.14 551 199.8"/>
-    <polygon fill="#2d56c7" points="210 515.94 111 574.1 111 457.77 210 399.6 210 515.94"/>
-    <polygon fill="#7c47bf" points="0 399.6 98 457.77 98 574.11 0 515.94 0 399.6"/>
-    <polygon fill="#0389e8" points="223 399.6 322 457.77 322 574.1 223 515.94 223 399.6"/>
-    <polygon fill="#fff32e" points="223 0 322 58.16 322 174.51 223 116.34 223 0"/>
-    <polygon fill="#ff6d55" points="223 257.97 322 199.8 322 316.14 223 374.31 223 257.97"/>
-    <polygon fill="#06dd7e" points="106 199.8 210 257.97 210 374.31 106 316.14 106 199.8"/>
-  </svg>
-  <!-- Zig_Brandmark wordmark -->
-  <svg width="110" height="20" viewBox="0 0 646.82 69.72" xmlns="http://www.w3.org/2000/svg" style="margin-left:10px;flex-shrink:0;">
-    <path fill="#f5f0e8" d="m1.66,12.46V.78h45.18v5.84l-29.21,50.63h30.57v11.68H0v-5.84L29.5,12.46H1.66Z"/>
-    <path fill="#f5f0e8" d="m133.85,68.94l-1.07-7.3c-3.6,5.36-9.05,8.08-16.55,8.08-8.76,0-16.16-3.02-22.3-9.15-6.13-6.13-9.15-14.7-9.15-25.7s3.12-19.57,9.44-25.7c6.33-6.13,13.92-9.15,22.98-9.15,14.7,0,24.73,8.57,28.33,21.52l-11.59,3.02c-3.51-8.57-9.06-12.85-16.75-12.85-11.59,0-19.57,7.98-19.57,23.17s7.89,23.17,19.28,23.17c9.25,0,14.41-5.94,15.29-12.95h-12.66v-10.52h24.93v34.37h-10.61Z"/>
-    <path fill="#f5f0e8" d="m203.76,68.94l-1.07-7.3c-3.6,5.36-9.05,8.08-16.55,8.08-8.76,0-16.16-3.02-22.3-9.15-6.13-6.13-9.15-14.7-9.15-25.7s3.12-19.57,9.44-25.7c6.33-6.13,13.92-9.15,22.98-9.15,14.7,0,24.73,8.57,28.33,21.52l-11.59,3.02c-3.51-8.57-9.06-12.85-16.75-12.85-11.59,0-19.57,7.98-19.57,23.17s7.89,23.17,19.28,23.17c9.25,0,14.41-5.94,15.29-12.95h-12.66v-10.52h24.93v34.37h-10.61Z"/>
-    <path fill="#f5f0e8" d="m277.76.78v42.26c0,17.62-9.83,26.68-25.41,26.68s-25.41-9.06-25.41-26.68V.78h12.66v42.45c0,9.83,4.28,14.8,12.76,14.8s12.76-4.97,12.76-14.8V.78h12.66Z"/>
-    <path fill="#f5f0e8" d="m322.55,38.46l18.89,30.48h-14.12l-18.3-29.4h-6.62v29.4h-12.66V.78h24.83c13.24,0,20.74,7.69,20.74,19.38,0,9.05-4.58,15.87-12.75,18.3Zm-7.89-10.61c5.36,0,7.98-2.53,7.98-7.69s-2.63-7.69-7.98-7.69h-12.27v15.38h12.27Z"/>
-    <path fill="#f5f0e8" d="m393.31,68.94l-4.97-16.07h-21.62l-4.97,16.07h-13.63L371.21.78h12.66l23.08,68.16h-13.63Zm-15.77-51.41l-7.21,23.66h14.41l-7.2-23.66Z"/>
-    <path fill="#f5f0e8" d="m401.1,12.46V.78h50.43v11.68h-18.89v56.47h-12.66V12.46h-18.89Z"/>
-    <path fill="#f5f0e8" d="m516.38.78h13.83l-18.01,31.35,21.23,36.8h-14.02l-14.12-24.63-14.12,24.63h-14.02l21.23-36.8L480.36.78h13.83l11.1,19.28,11.1-19.28Z"/>
-    <path fill="#f5f0e8" d="m538.81.78h13.63l12.37,26.48,12.36-26.48h13.63l-19.67,39.14v29.02h-12.66v-29.02L538.81.78Z"/>
-    <path fill="#f5f0e8" d="m600.28,12.46V.78h45.18v5.84l-29.21,50.63h30.57v11.68h-48.2v-5.84l29.5-50.63h-27.85Z"/>
-    <rect fill="#f5f0e8" x="60.76" y=".78" width="12.66" height="68.16"/>
-  </svg>
-</div>
-  <div class="header-tag">Reward Redemption Portal</div>
-  <!-- Secret admin: click logo 5x -->
+    <svg width="32" height="28" viewBox="0 0 657 574.11" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+      <polygon fill="#ff9642" points="447 515.94 546 574.1 546 457.77 447 399.6 447 515.94"/>
+      <polygon fill="#98ef60" points="657 399.6 559 457.77 559 574.11 657 515.94 657 399.6"/>
+      <polygon fill="#05dde2" points="434 399.6 335 457.77 335 574.1 434 515.94 434 399.6"/>
+      <polygon fill="#ffc373" points="434 0 335 58.16 335 174.51 434 116.34 434 0"/>
+      <polygon fill="#ff3740" points="434 257.97 335 199.8 335 316.14 434 374.31 434 257.97"/>
+      <polygon fill="#d647c2" points="551 199.8 447 257.97 447 374.31 551 316.14 551 199.8"/>
+      <polygon fill="#2d56c7" points="210 515.94 111 574.1 111 457.77 210 399.6 210 515.94"/>
+      <polygon fill="#7c47bf" points="0 399.6 98 457.77 98 574.11 0 515.94 0 399.6"/>
+      <polygon fill="#0389e8" points="223 399.6 322 457.77 322 574.1 223 515.94 223 399.6"/>
+      <polygon fill="#fff32e" points="223 0 322 58.16 322 174.51 223 116.34 223 0"/>
+      <polygon fill="#ff6d55" points="223 257.97 322 199.8 322 316.14 223 374.31 223 257.97"/>
+      <polygon fill="#06dd7e" points="106 199.8 210 257.97 210 374.31 106 316.14 106 199.8"/>
+    </svg>
+    <svg width="100" height="18" viewBox="0 0 646.82 69.72" xmlns="http://www.w3.org/2000/svg" style="margin-left:4px;flex-shrink:0;">
+      <path fill="#2d2640" d="m1.66,12.46V.78h45.18v5.84l-29.21,50.63h30.57v11.68H0v-5.84L29.5,12.46H1.66Z"/>
+      <path fill="#2d2640" d="m133.85,68.94l-1.07-7.3c-3.6,5.36-9.05,8.08-16.55,8.08-8.76,0-16.16-3.02-22.3-9.15-6.13-6.13-9.15-14.7-9.15-25.7s3.12-19.57,9.44-25.7c6.33-6.13,13.92-9.15,22.98-9.15,14.7,0,24.73,8.57,28.33,21.52l-11.59,3.02c-3.51-8.57-9.06-12.85-16.75-12.85-11.59,0-19.57,7.98-19.57,23.17s7.89,23.17,19.28,23.17c9.25,0,14.41-5.94,15.29-12.95h-12.66v-10.52h24.93v34.37h-10.61Z"/>
+      <path fill="#2d2640" d="m203.76,68.94l-1.07-7.3c-3.6,5.36-9.05,8.08-16.55,8.08-8.76,0-16.16-3.02-22.3-9.15-6.13-6.13-9.15-14.7-9.15-25.7s3.12-19.57,9.44-25.7c6.33-6.13,13.92-9.15,22.98-9.15,14.7,0,24.73,8.57,28.33,21.52l-11.59,3.02c-3.51-8.57-9.06-12.85-16.75-12.85-11.59,0-19.57,7.98-19.57,23.17s7.89,23.17,19.28,23.17c9.25,0,14.41-5.94,15.29-12.95h-12.66v-10.52h24.93v34.37h-10.61Z"/>
+      <path fill="#2d2640" d="m277.76.78v42.26c0,17.62-9.83,26.68-25.41,26.68s-25.41-9.06-25.41-26.68V.78h12.66v42.45c0,9.83,4.28,14.8,12.76,14.8s12.76-4.97,12.76-14.8V.78h12.66Z"/>
+      <path fill="#2d2640" d="m322.55,38.46l18.89,30.48h-14.12l-18.3-29.4h-6.62v29.4h-12.66V.78h24.83c13.24,0,20.74,7.69,20.74,19.38,0,9.05-4.58,15.87-12.75,18.3Zm-7.89-10.61c5.36,0,7.98-2.53,7.98-7.69s-2.63-7.69-7.98-7.69h-12.27v15.38h12.27Z"/>
+      <path fill="#2d2640" d="m393.31,68.94l-4.97-16.07h-21.62l-4.97,16.07h-13.63L371.21.78h12.66l23.08,68.16h-13.63Zm-15.77-51.41l-7.21,23.66h14.41l-7.2-23.66Z"/>
+      <path fill="#2d2640" d="m401.1,12.46V.78h50.43v11.68h-18.89v56.47h-12.66V12.46h-18.89Z"/>
+      <path fill="#2d2640" d="m516.38.78h13.83l-18.01,31.35,21.23,36.8h-14.02l-14.12-24.63-14.12,24.63h-14.02l21.23-36.8L480.36.78h13.83l11.1,19.28,11.1-19.28Z"/>
+      <path fill="#2d2640" d="m538.81.78h13.63l12.37,26.48,12.36-26.48h13.63l-19.67,39.14v29.02h-12.66v-29.02L538.81.78Z"/>
+      <path fill="#2d2640" d="m600.28,12.46V.78h45.18v5.84l-29.21,50.63h30.57v11.68h-48.2v-5.84l29.5-50.63h-27.85Z"/>
+      <rect fill="#2d2640" x="60.76" y=".78" width="12.66" height="68.16"/>
+    </svg>
+    <span class="anni-badge">🎂 10 Years!</span>
+  </div>
+  <div class="header-tag">Anniversary Reward Redemption</div>
 </header>
 
 <!-- ─── HERO ─── -->
 <section class="hero">
-  <div>
-    <h1>CHOOSE<br>YOUR <span>REWARD</span></h1>
-
-  </div>
-  <div>
-    <p>Select the products you want below. Pick your size, add to your list, then hit Redeem to claim your items.</p>
-    <div class="step-pills">
-      <span class="pill active">01 Browse</span>
-      <span class="pill">02 Select Size</span>
-      <span class="pill">03 Add to List</span>
-      <span class="pill">04 Redeem</span>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="sparkle">✨</span>
+        Celebrating 10 incredible years together
+      </div>
+      <h1>
+        PICK YOUR
+        <span class="line2">FAVOURITE</span>
+        <span class="line3">REWARD!</span>
+      </h1>
+      <p class="hero-sub">
+        A decade of building something brilliant — <strong>and you've been part of every moment.</strong> 
+        To celebrate Zigurat turning 10, we're giving you the chance to pick your favourite goodies as a 
+        big thank-you from us to you. 🎉
+      </p>
+      <div class="step-pills">
+        <span class="pill active">01 Browse</span>
+        <span class="pill">02 Pick Size</span>
+        <span class="pill">03 Add to List</span>
+        <span class="pill">04 Redeem 🎁</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div style="position:relative;display:flex;flex-direction:column;align-items:center;">
+        <div class="big-ten">10</div>
+        <div class="ten-label">Years of Zigurat</div>
+        <div style="margin-top:16px;font-size:2rem;animation:drift1 4s ease-in-out infinite;">🎂🎊🥳</div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ─── PRODUCTS ─── -->
-<div class="section-label">— Available Products (15 items)</div>
+<div class="section-label">Available Products — 15 special anniversary picks</div>
 <div class="products" id="products-grid"></div>
 
 <!-- ─── BASKET BAR ─── -->
 <div class="basket-bar empty" id="basket-bar">
   <div class="basket-count" id="basket-count">0 items</div>
   <div class="basket-scroll" id="basket-scroll"></div>
-  <button class="redeem-btn" id="redeem-btn" onclick="openModal()">REDEEM →</button>
+  <button class="redeem-btn" id="redeem-btn" onclick="openModal()">REDEEM 🎁</button>
 </div>
 
 <!-- ─── REDEEM MODAL ─── -->
@@ -613,19 +902,17 @@
     <div id="modal-form-view">
       <div class="modal-header">
         <div>
-          <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:2px;color:#555;margin-bottom:8px;text-transform:uppercase;">Step 04 — Claim</div>
-          <div class="modal-title">SHIPPING<br>DETAILS</div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:2px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;">Step 04 — Almost there! 🎉</div>
+          <div class="modal-title">Where shall<br>we send <span>it?</span></div>
         </div>
         <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
       <div class="modal-body">
-        <!-- Order summary -->
         <div class="modal-basket-summary">
-          <h3>Your Selection</h3>
+          <h3>✨ Your Selection</h3>
           <div id="modal-summary-items"></div>
         </div>
 
-        <!-- Shipping form -->
         <div class="form-grid" id="shipping-form">
           <div class="form-group">
             <label>First Name *</label>
@@ -672,37 +959,38 @@
           </div>
           <div class="form-group full">
             <label>Notes (optional)</label>
-            <textarea id="f-notes" placeholder="Any special instructions or notes..."></textarea>
+            <textarea id="f-notes" placeholder="Any special instructions..."></textarea>
           </div>
         </div>
 
-        <button class="form-submit" onclick="submitRedemption()">CONFIRM REDEMPTION →</button>
+        <button class="form-submit" onclick="submitRedemption()">CLAIM MY REWARD 🎉</button>
       </div>
     </div>
 
     <!-- SUCCESS -->
     <div class="success-screen" id="success-screen">
       <div class="success-icon">
-  <svg width="80" height="70" viewBox="0 0 657 574.11" xmlns="http://www.w3.org/2000/svg">
-    <polygon fill="#ff9642" points="447 515.94 546 574.1 546 457.77 447 399.6 447 515.94"/>
-    <polygon fill="#98ef60" points="657 399.6 559 457.77 559 574.11 657 515.94 657 399.6"/>
-    <polygon fill="#05dde2" points="434 399.6 335 457.77 335 574.1 434 515.94 434 399.6"/>
-    <polygon fill="#ffc373" points="434 0 335 58.16 335 174.51 434 116.34 434 0"/>
-    <polygon fill="#ff3740" points="434 257.97 335 199.8 335 316.14 434 374.31 434 257.97"/>
-    <polygon fill="#d647c2" points="551 199.8 447 257.97 447 374.31 551 316.14 551 199.8"/>
-    <polygon fill="#2d56c7" points="210 515.94 111 574.1 111 457.77 210 399.6 210 515.94"/>
-    <polygon fill="#7c47bf" points="0 399.6 98 457.77 98 574.11 0 515.94 0 399.6"/>
-    <polygon fill="#0389e8" points="223 399.6 322 457.77 322 574.1 223 515.94 223 399.6"/>
-    <polygon fill="#fff32e" points="223 0 322 58.16 322 174.51 223 116.34 223 0"/>
-    <polygon fill="#ff6d55" points="223 257.97 322 199.8 322 316.14 223 374.31 223 257.97"/>
-    <polygon fill="#06dd7e" points="106 199.8 210 257.97 210 374.31 106 316.14 106 199.8"/>
-  </svg>
-</div>
-      <h2>REDEEMED!</h2>
-      <p>Your reward claim has been received.</p>
-      <p>We'll be in touch at your email to confirm dispatch.</p>
+        <svg width="80" height="70" viewBox="0 0 657 574.11" xmlns="http://www.w3.org/2000/svg">
+          <polygon fill="#ff9642" points="447 515.94 546 574.1 546 457.77 447 399.6 447 515.94"/>
+          <polygon fill="#98ef60" points="657 399.6 559 457.77 559 574.11 657 515.94 657 399.6"/>
+          <polygon fill="#05dde2" points="434 399.6 335 457.77 335 574.1 434 515.94 434 399.6"/>
+          <polygon fill="#ffc373" points="434 0 335 58.16 335 174.51 434 116.34 434 0"/>
+          <polygon fill="#ff3740" points="434 257.97 335 199.8 335 316.14 434 374.31 434 257.97"/>
+          <polygon fill="#d647c2" points="551 199.8 447 257.97 447 374.31 551 316.14 551 199.8"/>
+          <polygon fill="#2d56c7" points="210 515.94 111 574.1 111 457.77 210 399.6 210 515.94"/>
+          <polygon fill="#7c47bf" points="0 399.6 98 457.77 98 574.11 0 515.94 0 399.6"/>
+          <polygon fill="#0389e8" points="223 399.6 322 457.77 322 574.1 223 515.94 223 399.6"/>
+          <polygon fill="#fff32e" points="223 0 322 58.16 322 174.51 223 116.34 223 0"/>
+          <polygon fill="#ff6d55" points="223 257.97 322 199.8 322 316.14 223 374.31 223 257.97"/>
+          <polygon fill="#06dd7e" points="106 199.8 210 257.97 210 374.31 106 316.14 106 199.8"/>
+        </svg>
+      </div>
+      <h2>YOU'RE IN! 🎊</h2>
+      <p>Your anniversary reward has been claimed!</p>
+      <p>We'll drop you an email to confirm dispatch soon.</p>
       <div class="ref-code" id="ref-code-display"></div>
-      <p style="font-size:0.75rem;color:#555;margin-top:8px;">Save this reference number</p>
+      <p style="font-size:0.75rem;color:var(--muted);margin-top:8px;">Save your reference number 💾</p>
+      <p style="font-size:0.9rem;color:var(--accent1);font-weight:700;margin-top:16px;">Here's to another 10 amazing years! 🥂</p>
     </div>
   </div>
 </div>
@@ -710,7 +998,7 @@
 <!-- ─── ADMIN PANEL ─── -->
 <div id="admin-panel">
   <div class="admin-header">
-    <h2>⚙ SUBMISSIONS ADMIN</h2>
+    <h2>⚙ Submissions Admin</h2>
     <div style="display:flex;gap:10px;">
       <button class="export-btn" onclick="exportCSV()">Export CSV</button>
       <button class="export-btn" onclick="exportJSON()">Export JSON</button>
@@ -722,7 +1010,7 @@
 
 <script>
 // ─────────────────────────────────────────────
-// PRODUCT DATA (replace images with real URLs)
+// PRODUCT DATA
 // ─────────────────────────────────────────────
 const PRODUCTS = [
   { id: 1, name: 'Essential Hoodie', category: 'Apparel', emoji: '🧥', sizes: ['XS','S','M','L','XL','XXL'], img: null },
@@ -742,15 +1030,9 @@ const PRODUCTS = [
   { id: 15, name: 'Snapback', category: 'Accessories', emoji: '🎩', sizes: ['One Size'], img: null },
 ];
 
-// ─────────────────────────────────────────────
-// STATE
-// ─────────────────────────────────────────────
-let basket = []; // { productId, name, emoji, size }
-let selectedSizes = {}; // productId -> size
+let basket = [];
+let selectedSizes = {};
 
-// ─────────────────────────────────────────────
-// RENDER PRODUCTS
-// ─────────────────────────────────────────────
 function renderProducts() {
   const grid = document.getElementById('products-grid');
   grid.innerHTML = PRODUCTS.map(p => `
@@ -763,87 +1045,58 @@ function renderProducts() {
         <div class="product-name">${p.name}</div>
       </div>
       <div class="size-selector" id="sizes-${p.id}">
-        ${p.sizes.map(s => `
-          <button class="size-btn" onclick="selectSize(${p.id}, '${s}', this)">${s}</button>
-        `).join('')}
+        ${p.sizes.map(s => `<button class="size-btn" onclick="selectSize(${p.id}, '${s}', this)">${s}</button>`).join('')}
       </div>
       <button class="add-btn" id="add-${p.id}" onclick="toggleBasket(${p.id})">+ Add to List</button>
     </div>
   `).join('');
 }
 
-// ─────────────────────────────────────────────
-// SIZE SELECTION
-// ─────────────────────────────────────────────
 function selectSize(productId, size, btn) {
   selectedSizes[productId] = size;
-  // Update UI
   const container = document.getElementById(`sizes-${productId}`);
   container.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-
-  // If already in basket, update size
   const inBasket = basket.find(b => b.productId === productId);
-  if (inBasket) {
-    inBasket.size = size;
-    renderBasket();
-  }
+  if (inBasket) { inBasket.size = size; renderBasket(); }
 }
 
-// ─────────────────────────────────────────────
-// BASKET TOGGLE
-// ─────────────────────────────────────────────
 function toggleBasket(productId) {
   const inBasket = basket.findIndex(b => b.productId === productId);
-
   if (inBasket > -1) {
-    // Remove
     basket.splice(inBasket, 1);
     document.getElementById(`card-${productId}`).classList.remove('selected');
     document.getElementById(`add-${productId}`).classList.remove('in-basket');
     document.getElementById(`add-${productId}`).textContent = '+ Add to List';
   } else {
-    // Add - require size if multiple sizes
     const product = PRODUCTS.find(p => p.id === productId);
     const size = selectedSizes[productId] || (product.sizes.length === 1 ? product.sizes[0] : null);
-
     if (!size && product.sizes.length > 1) {
-      // Flash the size row
       const sizeRow = document.getElementById(`sizes-${productId}`);
-      sizeRow.style.outline = '1px solid #ff4444';
-      setTimeout(() => sizeRow.style.outline = '', 1200);
+      sizeRow.style.outline = '2px solid #f9847a';
+      sizeRow.style.borderRadius = '10px';
+      setTimeout(() => { sizeRow.style.outline = ''; sizeRow.style.borderRadius = ''; }, 1200);
       return;
     }
-
     if (!selectedSizes[productId] && product.sizes.length === 1) {
       selectedSizes[productId] = product.sizes[0];
       document.querySelector(`#sizes-${productId} .size-btn`).classList.add('active');
     }
-
     basket.push({ productId, name: product.name, emoji: product.emoji, size: selectedSizes[productId] });
     document.getElementById(`card-${productId}`).classList.add('selected');
     document.getElementById(`add-${productId}`).classList.add('in-basket');
     document.getElementById(`add-${productId}`).textContent = '✓ In List';
   }
-
   renderBasket();
 }
 
-// ─────────────────────────────────────────────
-// RENDER BASKET BAR
-// ─────────────────────────────────────────────
 function renderBasket() {
   const bar = document.getElementById('basket-bar');
   const scroll = document.getElementById('basket-scroll');
   const count = document.getElementById('basket-count');
-
-  if (basket.length === 0) {
-    bar.classList.add('empty');
-    return;
-  }
+  if (basket.length === 0) { bar.classList.add('empty'); return; }
   bar.classList.remove('empty');
   count.textContent = `${basket.length} item${basket.length !== 1 ? 's' : ''}`;
-
   scroll.innerHTML = basket.map(item => `
     <div class="basket-item">
       <div class="basket-item-emoji">${item.emoji}</div>
@@ -864,13 +1117,8 @@ function removeFromBasket(productId) {
   renderBasket();
 }
 
-// ─────────────────────────────────────────────
-// MODAL
-// ─────────────────────────────────────────────
 function openModal() {
   if (basket.length === 0) return;
-
-  // Populate summary
   const summary = document.getElementById('modal-summary-items');
   summary.innerHTML = basket.map(item => `
     <div class="summary-item">
@@ -878,7 +1126,6 @@ function openModal() {
       <span class="summary-size">${item.size}</span>
     </div>
   `).join('');
-
   document.getElementById('modal-form-view').style.display = 'block';
   document.getElementById('success-screen').classList.remove('show');
   document.getElementById('modal-overlay').classList.add('open');
@@ -890,39 +1137,29 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 
-// Close on overlay click
 document.getElementById('modal-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-// ─────────────────────────────────────────────
-// CONFIG — paste your values here after setup
-// ─────────────────────────────────────────────
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzQ0ZpE_UxWmTz5-xLutO4LyuQHyKdkpQndunedh_0tYatXIz6_Z4BGiOVfvEolKhW0A/exec';
-const SECRET_TOKEN      = 'qcdE2hRxvwb4DN18URVbAC8CvTvPUWTdbrdhKvfZUbbRR3w7MLpMW3wHJAjMccih'; // must match Apps Script
+const SECRET_TOKEN      = 'qcdE2hRxvwb4DN18URVbAC8CvTvPUWTdbrdhKvfZUbbRR3w7MLpMW3wHJAjMccih';
 
-// ─────────────────────────────────────────────
-// FORM SUBMISSION
-// ─────────────────────────────────────────────
 async function submitRedemption() {
-  // Basic validation
   const required = ['f-firstname','f-lastname','f-email','f-addr1','f-city','f-postcode'];
   let valid = true;
   required.forEach(id => {
     const el = document.getElementById(id);
     if (!el.value.trim()) {
-      el.style.borderColor = '#ff4444';
+      el.style.borderColor = '#f9847a';
       valid = false;
       el.addEventListener('input', () => el.style.borderColor = '', { once: true });
     }
   });
   if (!valid) return;
 
-  // Build submission object
-  const ref = 'XYZ-' + Date.now().toString(36).toUpperCase();
+  const ref = 'ZIG-' + Date.now().toString(36).toUpperCase();
   const submission = {
-    ref,
-    token: SECRET_TOKEN,
+    ref, token: SECRET_TOKEN,
     timestamp: new Date().toISOString(),
     firstName:  document.getElementById('f-firstname').value.trim(),
     lastName:   document.getElementById('f-lastname').value.trim(),
@@ -937,89 +1174,67 @@ async function submitRedemption() {
     itemCount:  basket.length,
   };
 
-  // Disable button, show loading
   const submitBtn = document.querySelector('.form-submit');
-  submitBtn.textContent = 'SENDING…';
+  submitBtn.textContent = 'SENDING… 🎁';
   submitBtn.disabled = true;
 
   try {
-    // Google Apps Script requires no-cors for cross-origin POSTs from static sites
     await fetch(GOOGLE_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
+      method: 'POST', mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(submission),
     });
-    // no-cors means we can't read the response — treat reaching here as success
     onSubmitSuccess(ref);
   } catch (err) {
-    // Network failure fallback — save locally and flag for manual follow-up
-    console.warn('Google Sheets POST failed, saving locally:', err);
-    const existing = JSON.parse(localStorage.getItem('xyz_fallback') || '[]');
+    const existing = JSON.parse(localStorage.getItem('zig_fallback') || '[]');
     existing.push(submission);
-    localStorage.setItem('xyz_fallback', JSON.stringify(existing));
-    // Still show success to user — you can check fallback data in admin
+    localStorage.setItem('zig_fallback', JSON.stringify(existing));
     onSubmitSuccess(ref, true);
   } finally {
-    submitBtn.textContent = 'CONFIRM REDEMPTION →';
+    submitBtn.textContent = 'CLAIM MY REWARD 🎉';
     submitBtn.disabled = false;
   }
 }
 
 function onSubmitSuccess(ref, isFallback = false) {
   document.getElementById('modal-form-view').style.display = 'none';
-  const successScreen = document.getElementById('success-screen');
-  successScreen.classList.add('show');
+  document.getElementById('success-screen').classList.add('show');
   document.getElementById('ref-code-display').textContent = ref;
-  if (isFallback) {
-    const note = document.getElementById('fallback-note');
-    if (note) note.style.display = 'block';
-  }
-
-  // Clear basket
   basket.forEach(item => {
     document.getElementById(`card-${item.productId}`).classList.remove('selected');
     document.getElementById(`add-${item.productId}`).classList.remove('in-basket');
     document.getElementById(`add-${item.productId}`).textContent = '+ Add to List';
   });
-  basket = [];
-  selectedSizes = {};
+  basket = []; selectedSizes = {};
   renderBasket();
 }
 
-// ─────────────────────────────────────────────
-// ADMIN PANEL (logo click 5x)
-// ─────────────────────────────────────────────
-let logoClicks = 0;
-let logoTimer;
+// Admin: logo click 5x
+let logoClicks = 0, logoTimer;
 document.querySelector('.logo').addEventListener('click', () => {
   logoClicks++;
   clearTimeout(logoTimer);
   logoTimer = setTimeout(() => logoClicks = 0, 2000);
-  if (logoClicks >= 5) {
-    logoClicks = 0;
-    openAdmin();
-  }
+  if (logoClicks >= 5) { logoClicks = 0; openAdmin(); }
 });
 
 function openAdmin() {
   const panel = document.getElementById('admin-panel');
   const content = document.getElementById('admin-content');
-  const fallback = JSON.parse(localStorage.getItem('xyz_fallback') || '[]');
-
+  const fallback = JSON.parse(localStorage.getItem('zig_fallback') || '[]');
   if (fallback.length === 0) {
     content.innerHTML = `<div class="no-submissions">ALL SUBMISSIONS GO TO GOOGLE SHEETS<br><br>
-      <span style="color:#555;font-size:0.65rem">Any network-failure fallback entries would appear here</span></div>`;
+      <span style="font-size:0.65rem;">Any network-failure fallback entries would appear here</span></div>`;
   } else {
     const sorted = [...fallback].reverse();
     content.innerHTML = `
-      <div style="background:#1a0800;border:1px solid #ff8800;padding:16px 20px;border-radius:2px;margin-bottom:24px;
-        font-family:'DM Mono',monospace;font-size:0.7rem;color:#ff8800;letter-spacing:1px;">
-        ⚠ ${fallback.length} FALLBACK SUBMISSION${fallback.length>1?'S':''} — these failed to reach Google Sheets. Export and add manually.
+      <div style="background:#fff8e6;border:2px solid var(--accent3);padding:16px 20px;border-radius:14px;margin-bottom:24px;
+        font-family:'DM Mono',monospace;font-size:0.7rem;color:#c47a2a;letter-spacing:1px;">
+        ⚠ ${fallback.length} FALLBACK SUBMISSION${fallback.length>1?'S':''} — these failed to reach Google Sheets.
       </div>
       ${sorted.map(s => `
-        <div class="submission-card" style="border-color:#ff8800">
-          <h3>REF: ${s.ref} — ${new Date(s.timestamp).toLocaleString()} ⚠ FALLBACK</h3>
+        <div class="submission-card">
+          <h3>REF: ${s.ref} — ${new Date(s.timestamp).toLocaleString()}</h3>
           <dl class="submission-detail">
             <dt>Name</dt><dd>${s.firstName} ${s.lastName}</dd>
             <dt>Email</dt><dd>${s.email}</dd>
@@ -1029,13 +1244,12 @@ function openAdmin() {
             <dt>Country</dt><dd>${s.country}</dd>
             ${s.notes ? `<dt>Notes</dt><dd>${s.notes}</dd>` : ''}
           </dl>
-          <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#555;letter-spacing:2px;margin-bottom:8px;text-transform:uppercase;">Items:</div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:8px;text-transform:uppercase;">Items:</div>
           <div class="items-list">
             ${(s.items||'').split(' | ').map(i => `<span class="item-tag">${i}</span>`).join('')}
           </div>
         </div>`).join('')}`;
   }
-
   panel.classList.add('show');
   document.body.style.overflow = 'hidden';
 }
@@ -1046,38 +1260,25 @@ function closeAdmin() {
 }
 
 function exportJSON() {
-  const data = localStorage.getItem('xyz_fallback') || '[]';
+  const data = localStorage.getItem('zig_fallback') || '[]';
   const blob = new Blob([data], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'xyz-fallback-redemptions.json'; a.click();
+  const a = document.createElement('a'); a.href = url; a.download = 'zig-fallback-redemptions.json'; a.click();
   URL.revokeObjectURL(url);
 }
 
 function exportCSV() {
-  const submissions = JSON.parse(localStorage.getItem('xyz_fallback') || '[]');
+  const submissions = JSON.parse(localStorage.getItem('zig_fallback') || '[]');
   if (!submissions.length) { alert('No fallback submissions to export.'); return; }
-
   const headers = ['Ref','Timestamp','First Name','Last Name','Email','Address 1','Address 2','City','Postcode','Country','Notes','Items'];
-  const rows = submissions.map(s => [
-    s.ref, s.timestamp,
-    s.firstName, s.lastName, s.email,
-    s.address1, s.address2,
-    s.city, s.postcode, s.country,
-    s.notes, s.items
-  ].map(v => `"${(v||'').replace(/"/g,'""')}"`));
-
+  const rows = submissions.map(s => [s.ref, s.timestamp, s.firstName, s.lastName, s.email, s.address1, s.address2, s.city, s.postcode, s.country, s.notes, s.items].map(v => `"${(v||'').replace(/"/g,'""')}"`));
   const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'xyz-fallback-redemptions.csv'; a.click();
+  const a = document.createElement('a'); a.href = url; a.download = 'zig-fallback-redemptions.csv'; a.click();
   URL.revokeObjectURL(url);
 }
 
-// ─────────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────────
 renderProducts();
 renderBasket();
 </script>
